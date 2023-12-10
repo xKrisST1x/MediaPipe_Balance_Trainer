@@ -187,6 +187,8 @@ public class PipeServer : MonoBehaviour
 
     }
 
+    public bool logLandmark = true;
+
     private void Start()
     {
         System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
@@ -195,12 +197,182 @@ public class PipeServer : MonoBehaviour
 
         Thread t = new Thread(new ThreadStart(Run));
         t.Start();
+        
 
     }
     private void Update()
+{
+    if(logLandmark == true)
     {
-        UpdateBody(body);
+    StartCoroutine(LogLandmarkPositions());
     }
+    UpdateBody(body);
+
+    //CheckLandmark14Position();
+
+    // Calculates angles of hips and shoulders
+    CalculateAngleBetweenLandmarksLeftHip();
+    CalculateAngleBetweenLandmarksRightHip();
+    CalculateAngleBetweenLandmarksLeftShoulder();
+    CalculateAngleBetweenLandmarksRightShoulder();
+
+}
+
+private IEnumerator LogLandmarkPositions()
+{
+    logLandmark = false;
+    yield return new WaitForSeconds(1f);
+
+    // Log positions of landmarks
+    for (int i = 0; i < LANDMARK_COUNT; i++)
+    {
+        Vector3 landmarkPosition = body.instances[i].transform.position;
+        //Debug.Log($"Landmark {i}: {landmarkPosition.ToString("F3")}");
+    }
+    logLandmark = true;
+}
+
+private void CalculateAngleBetweenLandmarksLeftHip()
+{
+    int landmark11Index = 11;
+    int landmark23Index = 23;
+    int landmark25Index = 25;
+
+    // Check if the landmarks exist in the body.instances array
+    if (body.instances.Length > landmark11Index && body.instances.Length > landmark23Index && body.instances.Length > landmark25Index)
+    {
+        // Get the positions of the landmarks
+        Vector3 landmark11Pos = body.instances[landmark11Index].transform.position;
+        Vector3 landmark23Pos = body.instances[landmark23Index].transform.position;
+        Vector3 landmark25Pos = body.instances[landmark25Index].transform.position;
+
+        // Calculate the vectors from Landmark 23 to Landmark 11 and Landmark 23 to Landmark 25
+        Vector3 vector23to11 = landmark11Pos - landmark23Pos;
+        Vector3 vector23to25 = landmark25Pos - landmark23Pos;
+
+        // Calculate the angle between the vectors
+        float angle = Vector3.Angle(vector23to11, vector23to25);
+
+        //Debug.Log($"Left hip angle: {angle} degrees");
+
+        if(angle < 145 || angle > 185)
+        {
+            Debug.Log("Left hip out of bounds");
+        }
+    }
+}
+
+private void CalculateAngleBetweenLandmarksRightHip()
+{
+    int landmark12Index = 12;
+    int landmark24Index = 24;
+    int landmark26Index = 26;
+
+    // Check if the landmarks exist in the body.instances array
+    if (body.instances.Length > landmark12Index && body.instances.Length > landmark24Index && body.instances.Length > landmark26Index)
+    {
+        // Get the positions of the landmarks
+        Vector3 landmark12Pos = body.instances[landmark12Index].transform.position;
+        Vector3 landmark24Pos = body.instances[landmark24Index].transform.position;
+        Vector3 landmark26Pos = body.instances[landmark26Index].transform.position;
+
+        // Calculate the vectors from Landmark 24 to Landmark 12 and Landmark 24 to Landmark 26
+        Vector3 vector24to12 = landmark12Pos - landmark24Pos;
+        Vector3 vector24to26 = landmark26Pos - landmark24Pos;
+
+        // Calculate the angle between the vectors
+        float angle = Vector3.Angle(vector24to12, vector24to26);
+
+        //Debug.Log($"Right hip angle: {angle} degrees");
+
+        if(angle < 125 || angle > 165)
+        {
+            Debug.Log("Right hip out of bounds");
+        }
+    }
+}
+
+
+private void CalculateAngleBetweenLandmarksRightShoulder()
+{
+    int landmark14Index = 14;
+    int landmark12Index = 12;
+    int landmark24Index = 24;
+
+    // Check if the landmarks exist in the body.instances array
+    if (body.instances.Length > landmark14Index && body.instances.Length > landmark12Index && body.instances.Length > landmark24Index)
+    {
+        // Get the positions of the landmarks
+        Vector3 landmark14Pos = body.instances[landmark14Index].transform.position;
+        Vector3 landmark12Pos = body.instances[landmark12Index].transform.position;
+        Vector3 landmark24Pos = body.instances[landmark24Index].transform.position;
+
+        // Calculate the vectors from Landmark 12 to Landmark 14 and Landmark 12 to Landmark 24
+        Vector3 vector12to14 = landmark14Pos - landmark12Pos;
+        Vector3 vector12to24 = landmark24Pos - landmark12Pos;
+
+        // Calculate the angle between the vectors
+        float angle = Vector3.Angle(vector12to14, vector12to24);
+
+        //Debug.Log($"Right shoulder angle: {angle} degrees");
+
+        if(angle < 55 || angle > 95)
+        {
+            Debug.Log("Right shoulder out of bounds");
+        }
+    }
+}
+
+private void CalculateAngleBetweenLandmarksLeftShoulder()
+{
+    int landmark13Index = 13;
+    int landmark11Index = 11;
+    int landmark23Index = 23;
+
+    // Check if the landmarks exist in the body.instances array.
+    if (body.instances.Length > landmark13Index && body.instances.Length > landmark11Index && body.instances.Length > landmark23Index)
+    {
+        // Get the positions of the landmarks
+        Vector3 landmark13Pos = body.instances[landmark13Index].transform.position;
+        Vector3 landmark11Pos = body.instances[landmark11Index].transform.position;
+        Vector3 landmark23Pos = body.instances[landmark23Index].transform.position;
+
+        // Calculate the vectors from Landmark 11 to Landmark 13 and Landmark 11 to Landmark 23
+        Vector3 vector11to13 = landmark13Pos - landmark11Pos;
+        Vector3 vector11to23 = landmark23Pos - landmark11Pos;
+
+        // Calculate the angle between the vectors
+        float angle = Vector3.Angle(vector11to13, vector11to23);
+
+        //Debug.Log($"Left shoulder angle: {angle} degrees");
+
+        if(angle < 80 || angle > 120)
+        {
+            Debug.Log("Left shoulder out of bounds");
+        }
+    }
+}
+
+/*private void CheckLandmark14Position()
+{
+    float xUp = 5.5f;
+    float xLow = 4.5f;
+
+    if (body.instances.Length > 14 && body.instances[14] != null)
+    {
+        float landmark14X = body.instances[14].transform.position.x;
+
+        if(landmark14X > xUp || landmark14X < xLow)
+        {
+            Debug.Log("Right elbow out of position!");
+        }
+        else
+        {
+            Debug.Log("Right elbow in POSE!");
+        }
+    }
+}*/
+
     private void UpdateBody(Body b)
     {
         if (b.active == false) return;
