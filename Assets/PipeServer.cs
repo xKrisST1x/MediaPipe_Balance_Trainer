@@ -189,6 +189,10 @@ public class PipeServer : MonoBehaviour
 
     public bool logLandmark = true;
 
+    public GameObject floor;
+    public Material newColor;
+    public Material originalColor;
+
     private void Start()
     {
         System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
@@ -255,9 +259,17 @@ private void CalculateAngleBetweenLandmarksLeftHip()
 
         //Debug.Log($"Left hip angle: {angle} degrees");
 
-        if(angle < 145 || angle > 185)
+        if(angle < 150 || angle > 180)
         {
             Debug.Log("Left hip out of bounds");
+
+            Renderer renderer = floor.GetComponent<Renderer>();
+            renderer.material = newColor;
+        }
+        else
+        {
+            Renderer renderer = floor.GetComponent<Renderer>();
+            renderer.material = originalColor;
         }
     }
 }
@@ -288,6 +300,14 @@ private void CalculateAngleBetweenLandmarksRightHip()
         if(angle < 125 || angle > 165)
         {
             Debug.Log("Right hip out of bounds");
+
+            Renderer renderer = floor.GetComponent<Renderer>();
+            renderer.material = newColor;
+        }
+        else
+        {
+            Renderer renderer = floor.GetComponent<Renderer>();
+            renderer.material = originalColor;
         }
     }
 }
@@ -319,6 +339,14 @@ private void CalculateAngleBetweenLandmarksRightShoulder()
         if(angle < 55 || angle > 95)
         {
             Debug.Log("Right shoulder out of bounds");
+
+            Renderer renderer = floor.GetComponent<Renderer>();
+            renderer.material = newColor;
+        }
+        else
+        {
+            Renderer renderer = floor.GetComponent<Renderer>();
+            renderer.material = originalColor;
         }
     }
 }
@@ -349,6 +377,14 @@ private void CalculateAngleBetweenLandmarksLeftShoulder()
         if(angle < 80 || angle > 120)
         {
             Debug.Log("Left shoulder out of bounds");
+        
+        Renderer renderer = floor.GetComponent<Renderer>();
+            renderer.material = newColor;
+        }
+        else
+        {
+            Renderer renderer = floor.GetComponent<Renderer>();
+            renderer.material = originalColor;
         }
     }
 }

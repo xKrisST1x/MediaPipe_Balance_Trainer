@@ -369,6 +369,9 @@ MonoBehaviour:
   maxSpeed: 50
   samplesForPose: 1
   logLandmark: 1
+  floor: {fileID: 2075124889}
+  newColor: {fileID: 2100000, guid: c65ec8d030c318947af903534e76ada4, type: 2}
+  originalColor: {fileID: 2100000, guid: 7da63296c7fc0dc4886345e842ce96f0, type: 2}
 --- !u!4 &499442783
 Transform:
   m_ObjectHideFlags: 0
@@ -1108,6 +1111,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 499442783}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2075124889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2552428416732922563, guid: fd089d0f3683f1441a3c6b9f7e955f4a, type: 3}
+  m_PrefabInstance: {fileID: 1590897428}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
