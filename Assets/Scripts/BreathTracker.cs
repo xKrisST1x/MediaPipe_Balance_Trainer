@@ -1,0 +1,151 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
+
+public class BreathTracker : MonoBehaviour
+{
+    int breathPressure;
+
+    float breathRate = 3f;
+    
+    bool inhaling;
+
+    float inhaleCounter;
+    float exhaleCounter;
+
+    float inhaleCountdown;
+    float exhaleCountdown;
+
+    [SerializeField] TMP_Text inExText;
+    [SerializeField] TMP_Text countInhaleText;
+    [SerializeField] TMP_Text countExhaleText;
+
+    [SerializeField] GameObject inhaleParent;
+    [SerializeField] GameObject exhaleParent;
+
+    [SerializeField] GameObject[] inhaleLights;
+    [SerializeField] GameObject[] exhaleLights;
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            breathPressure = 400;
+        }
+        else
+        {
+            breathPressure = 672;
+        }
+
+        if (breathPressure < 600)
+        {
+            inhaling = true;
+        }
+        else
+        {
+            inhaling = false;
+        }
+
+        if (inhaling == true)
+        {
+            exhaleCounter = 0;
+            exhaleCountdown = 3;
+
+            inhaleCounter += Time.deltaTime;
+            inhaleCountdown -= Time.deltaTime;
+
+            /* Countdown timer 
+            if (inhaleCountdown <= 0)
+            {
+                countInhaleText.text = "0.00";
+            }
+            else
+            {
+                countInhaleText.text = inhaleCountdown.ToString("0.00");
+            }
+            */
+
+            CountdownLights(inhaleCountdown, inhaleLights);
+        }
+
+        if (inhaling == false)
+        {
+            inhaleCounter = 0;
+            inhaleCountdown = 3;
+
+            exhaleCounter += Time.deltaTime;
+            exhaleCountdown -= Time.deltaTime;
+
+            /* Countdown timer
+            if (exhaleCountdown <= 0)
+            {
+                countExhaleText.text = "0.00";
+            }
+            else
+            {
+                countExhaleText.text = exhaleCountdown.ToString("0.00");
+            }
+            */
+
+            CountdownLights(exhaleCountdown, exhaleLights);
+        }
+
+        if (inhaleCounter > breathRate)
+        {
+            inExText.text = "Exhale";
+            //countInhaleText.gameObject.SetActive(false); Countdown timer
+            //countExhaleText.gameObject.SetActive(true); Countdown timer
+            inhaleParent.SetActive(false);
+            exhaleParent.SetActive(true);
+        }
+        else if (exhaleCounter > breathRate)
+        {
+            inExText.text = "Inhale";
+            //countExhaleText.gameObject.SetActive(false); Countdown timer
+            //countInhaleText.gameObject.SetActive(true); Countdown timer
+            exhaleParent.SetActive(false);
+            inhaleParent.SetActive(true);
+        }
+
+        Debug.Log(inhaling);
+    }
+
+    void CountdownLights(float countdown, GameObject[] light)
+    {
+        for (int i = 0; i < light.Length; i++)
+        {
+            light[i].SetActive(false);
+        }
+
+        if (countdown >= 2f)
+        {
+            light[0].SetActive(true);
+            light[1].SetActive(false);
+            light[2].SetActive(false);
+            light[3].SetActive(false);
+        }
+        else if (countdown < 2f && countdown >= 1f)
+        {
+            light[0].SetActive(true);
+            light[1].SetActive(true);
+            light[2].SetActive(false);
+            light[3].SetActive(false);
+        }
+        else if (countdown < 1f && countdown >= 0f)
+        {
+            light[0].SetActive(true);
+            light[1].SetActive(true);
+            light[2].SetActive(true);
+            light[3].SetActive(false);
+        }
+        else if (countdown < 0f)
+        {
+            light[0].SetActive(false);
+            light[1].SetActive(false);
+            light[2].SetActive(false);
+            light[3].SetActive(true);
+        }
+    }
+}
