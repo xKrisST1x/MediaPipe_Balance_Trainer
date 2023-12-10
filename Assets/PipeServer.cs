@@ -281,7 +281,8 @@ private void CalculateAngleBetweenLandmarksRightHip()
     int landmark26Index = 26;
 
     // Check if the landmarks exist in the body.instances array
-    if (body.instances.Length > landmark12Index && body.instances.Length > landmark24Index && body.instances.Length > landmark26Index)
+    if (body.instances.Length > landmark12Index && body.instances.Length > landmark24Index && 
+        body.instances.Length > landmark26Index)
     {
         // Get the positions of the landmarks
         Vector3 landmark12Pos = body.instances[landmark12Index].transform.position;
