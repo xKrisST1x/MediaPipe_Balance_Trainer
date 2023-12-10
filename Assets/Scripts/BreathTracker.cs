@@ -7,6 +7,10 @@ using Unity.VisualScripting;
 public class BreathTracker : MonoBehaviour
 {
     int breathPressure;
+    int limit = 550;
+
+    //string inString = "Inhaling";
+    //string exString = "Exhaling";
 
     float breathRate = 3f;
     
@@ -30,20 +34,22 @@ public class BreathTracker : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetKey(KeyCode.Space))
-        {
-            breathPressure = 400;
-        }
-        else
-        {
-            breathPressure = 672;
-        }
-
-        if (breathPressure < 600)
         {
             inhaling = true;
         }
         else
+        {
+            inhaling = false;
+        }
+        */
+
+        if (breathPressure < limit)
+        {
+            inhaling = true;
+        }
+        else if (breathPressure > limit)
         {
             inhaling = false;
         }
@@ -109,7 +115,7 @@ public class BreathTracker : MonoBehaviour
             inhaleParent.SetActive(true);
         }
 
-        Debug.Log(inhaling);
+        Debug.Log(breathPressure);
     }
 
     void CountdownLights(float countdown, GameObject[] light)
@@ -147,5 +153,19 @@ public class BreathTracker : MonoBehaviour
             light[2].SetActive(false);
             light[3].SetActive(true);
         }
+    }
+
+    // Invoked when a line of data is received from the serial device.
+    void OnMessageArrived(string msg)
+    {
+        //Debug.Log("Arrived: " + msg);
+        int.TryParse(msg, out breathPressure);
+    }
+    // Invoked when a connect/disconnect event occurs. The parameter 'success'
+    // will be 'true' upon connection, and 'false' upon disconnection or
+    // failure to connect.
+    void OnConnectionEvent(bool success)
+    {
+        Debug.Log(success ? "Device connected" : "Device disconnected");
     }
 }
