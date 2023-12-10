@@ -9,6 +9,8 @@ public class BreathTracker : MonoBehaviour
     int breathPressure;
     int limit = 550;
 
+    string message;
+
     //string inString = "Inhaling";
     //string exString = "Exhaling";
 
