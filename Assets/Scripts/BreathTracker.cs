@@ -34,9 +34,6 @@ public class BreathTracker : MonoBehaviour
     [SerializeField] GameObject[] inhaleLights;
     [SerializeField] GameObject[] exhaleLights;
 
-    [SerializeField] AudioSource gongSource;
-    [SerializeField] AudioClip gongClip;
-
     void Update()
     {
         /*
@@ -136,8 +133,6 @@ public class BreathTracker : MonoBehaviour
             light[1].SetActive(false);
             light[2].SetActive(false);
             light[3].SetActive(false);
-
-            gongSource.PlayOneShot(gongClip);
         }
         else if (countdown < 2f && countdown >= 1f)
         {
@@ -145,8 +140,6 @@ public class BreathTracker : MonoBehaviour
             light[1].SetActive(true);
             light[2].SetActive(false);
             light[3].SetActive(false);
-
-            gongSource.PlayOneShot(gongClip);
         }
         else if (countdown < 1f && countdown >= 0f)
         {
@@ -154,8 +147,6 @@ public class BreathTracker : MonoBehaviour
             light[1].SetActive(true);
             light[2].SetActive(true);
             light[3].SetActive(false);
-
-            gongSource.PlayOneShot(gongClip);
         }
         else if (countdown < 0f)
         {
@@ -163,8 +154,6 @@ public class BreathTracker : MonoBehaviour
             light[1].SetActive(false);
             light[2].SetActive(false);
             light[3].SetActive(true);
-
-            gongSource.PlayOneShot(gongClip);
         }
     }
 
