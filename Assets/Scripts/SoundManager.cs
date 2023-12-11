@@ -11,11 +11,14 @@ public class SoundManager : MonoBehaviour
     public GameObject inhale1;
     public GameObject inhale2;
     public GameObject inhale3;
+    public GameObject inhaleFull;
     
     public GameObject exhale1;
     public GameObject exhale2;
     public GameObject exhale3;
+    public GameObject exhaleFull;
     
+    bool inhale1Played = true;
 
 
     // Start is called before the first frame update
@@ -27,34 +30,60 @@ public class SoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(inhale1.activeSelf)
+        if(inhale1.activeSelf && inhale1Played == true)
         {
             audioFile.PlayOneShot(soundClip1, 1f);
+            StartCoroutine(SoundTimer());
         }
 
-        if(inhale2.activeSelf)
+        if(inhale2.activeSelf && inhale1Played == true)
         {
             audioFile.PlayOneShot(soundClip1, 1f);
+            StartCoroutine(SoundTimer());
         }
 
-        if(inhale3.activeSelf)
+        if(inhale3.activeSelf && inhale1Played == true)
         {
             audioFile.PlayOneShot(soundClip1, 1f);
+            StartCoroutine(SoundTimer());
         }
 
-        if(exhale1.activeSelf)
+        if(inhaleFull.activeSelf && inhale1Played == true)
         {
-            audioFile.PlayOneShot(soundClip1, 1f);
+            audioFile.PlayOneShot(soundClip2, 1f);
+            StartCoroutine(SoundTimer());
         }
 
-        if(exhale2.activeSelf)
+        if(exhale1.activeSelf && inhale1Played == true)
         {
             audioFile.PlayOneShot(soundClip1, 1f);
+            StartCoroutine(SoundTimer());
         }
 
-        if(exhale3.activeSelf)
+        if(exhale2.activeSelf && inhale1Played == true)
         {
             audioFile.PlayOneShot(soundClip1, 1f);
+            StartCoroutine(SoundTimer());
         }
+
+        if(exhale3.activeSelf && inhale1Played == true)
+        {
+            audioFile.PlayOneShot(soundClip1, 1f);
+            StartCoroutine(SoundTimer());
+        }
+
+        if(exhaleFull.activeSelf && inhale1Played == true)
+        {
+            audioFile.PlayOneShot(soundClip2, 1f);
+            StartCoroutine(SoundTimer());
+        }
+    }
+
+    private IEnumerator SoundTimer()
+    {
+        inhale1Played = false;
+        yield return new WaitForSeconds(1f);
+        inhale1Played = true;
+
     }
 }
