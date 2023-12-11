@@ -259,7 +259,7 @@ private void CalculateAngleBetweenLandmarksLeftHip()
 
         //Debug.Log($"Left hip angle: {angle} degrees");
 
-        if(angle < 150 || angle > 180)
+        if(angle < 155 || angle > 175)
         {
             Debug.Log("Left hip out of bounds");
 
@@ -298,7 +298,7 @@ private void CalculateAngleBetweenLandmarksRightHip()
 
         //Debug.Log($"Right hip angle: {angle} degrees");
 
-        if(angle < 130 || angle > 160)
+        if(angle < 140 || angle > 155)
         {
             Debug.Log("Right hip out of bounds");
 
