@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 public class BreathTracker : MonoBehaviour
 {
     int breathPressure;
-    int limit = 550;
+    int limit = 565;
 
     string message;
 
@@ -36,7 +36,7 @@ public class BreathTracker : MonoBehaviour
 
     void Update()
     {
-        
+        /*
         if (Input.GetKey(KeyCode.Space))
         {
             inhaling = true;
@@ -45,8 +45,8 @@ public class BreathTracker : MonoBehaviour
         {
             inhaling = false;
         }
+        */
         
-        /*
         if (breathPressure < limit)
         {
             inhaling = true;
@@ -55,7 +55,6 @@ public class BreathTracker : MonoBehaviour
         {
             inhaling = false;
         }
-        */
 
         if (inhaling == true)
         {
