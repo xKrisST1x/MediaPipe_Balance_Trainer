@@ -261,7 +261,7 @@ private void CalculateAngleBetweenLandmarksLeftHip()
 
         if(angle < 155 || angle > 175)
         {
-            Debug.Log("Left hip out of bounds");
+           // Debug.Log("Left hip out of bounds");
 
             Renderer renderer = floor.GetComponent<Renderer>();
             renderer.material = newColor;
@@ -300,7 +300,7 @@ private void CalculateAngleBetweenLandmarksRightHip()
 
         if(angle < 140 || angle > 155)
         {
-            Debug.Log("Right hip out of bounds");
+            //Debug.Log("Right hip out of bounds");
 
             Renderer renderer = floor.GetComponent<Renderer>();
             renderer.material = newColor;
@@ -339,7 +339,7 @@ private void CalculateAngleBetweenLandmarksRightShoulder()
 
         if(angle < 60 || angle > 90)
         {
-            Debug.Log("Right shoulder out of bounds");
+            //Debug.Log("Right shoulder out of bounds");
 
             Renderer renderer = floor.GetComponent<Renderer>();
             renderer.material = newColor;
@@ -377,7 +377,7 @@ private void CalculateAngleBetweenLandmarksLeftShoulder()
 
         if(angle < 85 || angle > 115)
         {
-            Debug.Log("Left shoulder out of bounds");
+           // Debug.Log("Left shoulder out of bounds");
         
         Renderer renderer = floor.GetComponent<Renderer>();
             renderer.material = newColor;
